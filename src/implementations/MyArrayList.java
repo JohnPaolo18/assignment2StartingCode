@@ -98,21 +98,38 @@ public class MyArrayList<E> implements ListADT<E> {
 	}
 
 	@Override
+	//removes the element at the specified index, shift remaining elements to the left
 	public E remove(int index) throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
+		if (index < 0 || index >= size)
+			throw new IndexOutOfBoundsException();
 		return null;
 	}
 
+	//finds and removes the first occurrence of toRemove in the list.
+	//if found, it shifts and returns the removed element; if not found, it returns null
 	@Override
 	public E remove(E toRemove) throws NullPointerException {
-		// TODO Auto-generated method stub
+		if (toRemove == null)
+			throw new NullPointerException();
+		
+		for (int i = 0; i < size; i++) {
+			if (array[i].equals(toRemove)) {
+				return remove(i);
+			}
+		}
 		return null;
 	}
-
+	//replaces the element at a specified index with toChange and returns the element that was replaced
 	@Override
 	public E set(int index, E toChange) throws NullPointerException, IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return null;
+		if (toChange == null)
+			throw new NullPointerException();
+		if (index < 0 || index >= size)
+			throw new IndexOutOfBoundsException();
+		
+		E oldElement = array[index];
+		array[index] = toChange;
+		return oldElement;
 	}
 
 	@Override
@@ -120,28 +137,61 @@ public class MyArrayList<E> implements ListADT<E> {
 		return size == 0;
 	}
 
+	//This method checks if the list contains an element equal toFind
 	@Override
 	public boolean contains(E toFind) throws NullPointerException {
-		// TODO Auto-generated method stub
+		if (toFind == null)
+			throw new NullPointerException();
+		
+		for (int i = 0; i < size; i++) {
+			if(array[i].equals(toFind)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
+	//This method copies elements from the list into toHold, or creates a new array of toHold is too small
+	@SuppressWarnings("unchecked")
 	@Override
 	public E[] toArray(E[] toHold) throws NullPointerException {
-		// TODO Auto-generated method stub
-		return null;
+	    if (toHold == null)
+	        throw new NullPointerException();
+
+	    if (toHold.length < size) {
+	        return (E[]) java.util.Arrays.copyOf(array, size, toHold.getClass());
+	    }
+	    System.arraycopy(array, 0, toHold, 0, size);
+	    if (toHold.length > size) {
+	        toHold[size] = null;
+	    }
+	    return toHold;
 	}
 
+	//This method returns a new array containing all elements in the list
 	@Override
 	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+		return java.util.Arrays.copyOf(array, size);
 	}
 
+	//This method returns an iterator over the list's elements.
 	@Override
 	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+	    return new Iterator<E>() {
+	        private int currentIndex = 0;
+
+	        @Override
+	        public boolean hasNext() {
+	            return currentIndex < size;
+	        }
+
+	        @Override
+	        public E next() {
+	            if (!hasNext())
+	                throw new java.util.NoSuchElementException();
+	            return array[currentIndex++];
+	        }
+	    };
 	}
 
 }
