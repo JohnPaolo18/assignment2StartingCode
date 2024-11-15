@@ -18,20 +18,60 @@ public class MyDLL<E> implements ListADT<E> {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+		head = null;
+        tail = null;
+        size = 0;
 		
 	}
 
 	@Override
 	public boolean add(int index, E toAdd) throws NullPointerException, IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return false;
+		if (toAdd == null) 
+			throw new NullPointerException();
+        if (index < 0 || index > size) 
+        	throw new IndexOutOfBoundsException();
+
+        if (index == size) { 
+        	// Adding to the end
+            return add(toAdd);
+        } else if (index == 0) { 
+        	// Adding to the start
+            MyDLLNode<E> newNode = new MyDLLNode<>(toAdd, null, head);
+            if (head != null) {
+                head.setPrev(newNode);
+            }
+            head = newNode;
+            if (tail == null) {
+                tail = head;
+            }
+        } else { 
+        	// Adding in the middle
+            MyDLLNode<E> current = head;
+            for (int i = 0; i < index; i++) {
+                current = current.getNext();
+            }
+            MyDLLNode<E> newNode = new MyDLLNode<>(toAdd, current.getPrev(), current);
+            current.getPrev().setNext(newNode);
+            current.setPrev(newNode);
+        }
+        size++;
+        return true;
 	}
 
 	@Override
 	public boolean add(E toAdd) throws NullPointerException {
-		// TODO Auto-generated method stub
-		return false;
+		if (toAdd == null) 
+			throw new NullPointerException();
+
+        MyDLLNode<E> newNode = new MyDLLNode<>(toAdd, tail, null);
+        if (tail == null) {
+            head = newNode;
+        } else {
+            tail.setNext(newNode);
+        }
+        tail = newNode;
+        size++;
+        return true;
 	}
 
 	@Override
