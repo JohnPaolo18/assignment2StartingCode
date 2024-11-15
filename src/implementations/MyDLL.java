@@ -36,14 +36,31 @@ public class MyDLL<E> implements ListADT<E> {
 
 	@Override
 	public boolean addAll(ListADT<? extends E> toAdd) throws NullPointerException {
-		// TODO Auto-generated method stub
-		return false;
+		if (toAdd == null)
+			throw new NullPointerException("The provided list cannot be null.");
+		
+		Iterator<? extends E> iterator = toAdd.iterator();
+		//Iterate over each element in the list, get that element and adds it to the end of the list
+		while (iterator.hasNext()) {
+			E element = iterator.next();
+			add(element); 
+		}
+		
+		return true;
 	}
 
 	@Override
 	public E get(int index) throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return null;
+		if (index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException();
+		}
+		
+		//Start from the head of the node and traverse to the specified index
+		MyDLLNode<E> current = head;
+		for (int i = 0; i < index; i++) {
+			current = current.next;
+		}
+		return current.element;
 	}
 
 	@Override

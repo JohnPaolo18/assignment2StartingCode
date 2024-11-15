@@ -3,17 +3,15 @@ package implementations;
 import exceptions.EmptyQueueException;
 import utilities.QueueADT;
 import utilities.Iterator;
-
-
 import java.io.Serializable;
 
 public class MyQueue<E> implements QueueADT<E>, Serializable {
     private static final long serialVersionUID = 1L;
-    private MyArrayList<E> list;
+    private MyDLL<E> list;
 
     // Constructor
     public MyQueue() {
-        list = new MyArrayList<>();
+        list = new MyDLL<>();
     }
     
     @Override
@@ -52,7 +50,7 @@ public class MyQueue<E> implements QueueADT<E>, Serializable {
 
     @Override
     public boolean contains(E toFind) throws NullPointerException {
-        return list.contains(toFind); // Uses MyArrayList's contains method
+        return list.contains(toFind); // Uses MyDLL's contains method
     }
 
     @Override
@@ -67,7 +65,7 @@ public class MyQueue<E> implements QueueADT<E>, Serializable {
 
     @Override
     public Iterator<E> iterator() {
-        return list.iterator(); // Returns an iterator from MyArrayList
+        return list.iterator(); // Returns an iterator from MyDLL
     }
 
     @Override

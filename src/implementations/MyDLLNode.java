@@ -1,8 +1,8 @@
 package implementations;
 
 public class MyDLLNode<E> {
-	private E element; 
-	private MyDLLNode<E> prev, next;
+	protected E element; 
+	protected MyDLLNode<E> prev, next;
 	
 	public MyDLLNode(E elem, MyDLLNode<E> prev, MyDLLNode<E> next) 
 	{
