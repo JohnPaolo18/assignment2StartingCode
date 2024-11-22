@@ -25,9 +25,15 @@ public class MyStack<E> implements StackADT<E>, Serializable {
     // Adds an element to the top of the stack.
     @Override
     public E pop() throws EmptyStackException {
-        if (isEmpty()) throw new EmptyStackException("Stack is empty.");
-        return arrayList.remove(arrayList.size() - 1);
+        if (isEmpty()) {
+            throw new EmptyStackException("Stack is empty.");
+        }
+        int lastIndex = arrayList.size() - 1;
+        E element = arrayList.get(lastIndex); 
+        arrayList.remove(lastIndex); 
+        return element;
     }
+
 
     
     // Returns the element at the top of the stack without removing it.
